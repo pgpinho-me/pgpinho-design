@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CMS - PGPinho Design</title>
+    <style>
+        body { font-family: sans-serif; display: flex; height: 100vh; margin: 0; background: #f0f0f0; }
+        .sidebar { width: 300px; background: white; border-right: 1px solid #ddd; padding: 20px; overflow-y: auto; }
+        .main { flex: 1; padding: 40px; }
+        .project-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .project-item:hover { background: #f9f9f9; }
+        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: black; color: white; border: none; cursor: pointer; }
+        button.delete { background: red; float: right; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>Projects <button onclick="newProject()" style="padding:5px; font-size:12px;">+</button></h3>
+    <div id="list"></div>
+</div>
+
+<div class="main">
+    <h2 id="editorTitle">Edit Project</h2>
+    <form id="form" onsubmit="event.preventDefault(); saveCurrent();">
+        <label>Title</label>
+        <input id="pTitle" type="text">
+        <label>Category</label>
+        <input id="pCat" type="text">
+        <label>Year</label>
+        <input id="pYear" type="text">
+        <label>Image URL</label>
+        <input id="pImg" type="text">
+        <label>Description</label>
+        <textarea id="pDesc" rows="5"></textarea>
+        
+        <button type="submit">Save Changes</button>
+        <button type="button" class="delete" onclick="deleteCurrent()">Delete</button>
+    </form>
+</div>
+
+<script>
+    let projects = [];
+    let currentIndex = -1;
+
+    async function load() {
+        const res = await fetch('/projects.json');
+        projects = await res.json();
+        renderList();
+    }
+
+    function renderList() {
+        const list = document.getElementById('list');
+        list.innerHTML = '';
+        projects.forEach((p, i) => {
+            const div = document.createElement('div');
+            div.className = 'project-item';
+            div.textContent = p.title || 'Untitled';
+            div.onclick = () => edit(i);
+            list.appendChild(div);
+        });
+    }
+
+    function edit(index) {
+        currentIndex = index;
+        const p = projects[index];
+        document.getElementById('pTitle').value = p.title;
+        document.getElementById('pCat').value = p.category;
+        document.getElementById('pYear').value = p.year;
+        document.getElementById('pImg').value = p.image;
+        document.getElementById('pDesc').value = p.description;
+    }
+
+    function newProject() {
+        projects.push({ title: 'New Project', category: 'VFX', year: '2026', image: '', description: '' });
+        edit(projects.length - 1);
+        renderList();
+    }
+
+    function deleteCurrent() {
+        if (currentIndex > -1 && confirm('Delete?')) {
+            projects.splice(currentIndex, 1);
+            currentIndex = -1;
+            renderList();
+            saveToServer();
+        }
+    }
+
+    function saveCurrent() {
+        if (currentIndex === -1) return;
+        projects[currentIndex] = {
+            id: projects[currentIndex].id || Date.now(),
+            title: document.getElementById('pTitle').value,
+            category: document.getElementById('pCat').value,
+            year: document.getElementById('pYear').value,
+            image: document.getElementById('pImg').value,
+            description: document.getElementById('pDesc').value
+        };
+        renderList();
+        saveToServer();
+    }
+
+    async function saveToServer() {
+        await fetch('/api/save-projects', {
+            method: 'POST',
+            body: JSON.stringify(projects),
+            headers: { 'Authorization': 'Basic ' + btoa('admin:lightbox') } // Send auth explicitly just in case browser doesn't auto-send on fetch
+        });
+        alert('Saved!');
+    }
+
+    load();
+</script>
+
+</body>
+</html>

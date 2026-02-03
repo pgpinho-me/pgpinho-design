@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGPinho Design - VFX Supervisor</title>
+    <style>
+        :root {
+            --bg-color: #080808;
+            --text-color: #f0f0f0;
+            --accent-color: #e50914; /* Um toque de "Cinema" */
+            --card-bg: #111;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(8,8,8,0.9);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fff; }
+
+        /* Hero */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 8vw;
+            line-height: 0.9;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0;
+            mix-blend-mode: exclusion;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 20px;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        /* Projects Grid (Suraski Style) */
+        .projects-section {
+            padding: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 15vw; }
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 0px; /* Suraski é sharp */
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(0.98);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.4s;
+        }
+
+        .project-card:hover img { opacity: 1; }
+
+        .project-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .project-meta {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 40px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="brand">PGPinho Design</div>
+        <div class="nav-links">
+            <a href="#projects">Work</a>
+            <a href="#about">About</a>
+            <a href="/admin">Admin</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <h1>Visual<br>Engineering</h1>
+            <div class="hero-sub">
+                Paulo Pinho. VFX Supervisor & Motion Designer based in Porto.
+                Creating digital realities since 2000.
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <div class="grid" id="projectsGrid">
+            <!-- Projects injected via JS -->
+        </div>
+    </section>
+
+    <footer>
+        <div>&copy; 2026 PGPinho Design</div>
+        <div>Lightbox | Porto</div>
+    </footer>
+
+    <script>
+        // Load projects from JSON
+        fetch('projects.json')
+            .then(response => response.json())
+            .then(projects => {
+                const grid = document.getElementById('projectsGrid');
+                projects.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.innerHTML = `
+                        <img src="${p.image}" alt="${p.title}">
+                        <div class="project-info">
+                            <h2 class="project-title">${p.title}</h2>
+                            <div class="project-meta">${p.category} — ${p.year}</div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+    </script>
+
+</body>
+</html>
