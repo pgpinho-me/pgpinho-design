@@ -4,7 +4,8 @@
         "title": "1618",
         "category": "Feature Film VFX",
         "year": "2020",
-        "image": "https://via.placeholder.com/600x400/111/fff?text=1618",
+        "image": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         "description": "VFX Supervision for the historical drama produced by Lightbox."
     },
     {
@@ -13,6 +14,7 @@
         "category": "Feature Film VFX",
         "year": "2019",
         "image": "https://via.placeholder.com/600x400/222/fff?text=Sefarad",
+        "videoUrl": "",
         "description": "Full VFX supervision ensuring historical accuracy and visual impact."
     },
     {
@@ -21,6 +23,7 @@
         "category": "TV Series",
         "year": "2016",
         "image": "https://via.placeholder.com/600x400/333/fff?text=Vidago+Palace",
+        "videoUrl": "",
         "description": "Visual effects for the RTP period drama series."
     },
     {
@@ -29,6 +32,7 @@
         "category": "Multimedia",
         "year": "2013",
         "image": "https://via.placeholder.com/600x400/0051ba/fff?text=FC+Porto",
+        "videoUrl": "",
         "description": "Interactive content production and supervision for the museum."
     },
     {
@@ -37,6 +41,7 @@
         "category": "Feature Film",
         "year": "2012",
         "image": "https://via.placeholder.com/600x400/fc0/000?text=Balas+3",
+        "videoUrl": "",
         "description": "Cult classic action-comedy VFX."
     }
 ]

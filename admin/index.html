@@ -6,12 +6,14 @@
     <style>
         body { font-family: sans-serif; display: flex; height: 100vh; margin: 0; background: #f0f0f0; }
         .sidebar { width: 300px; background: white; border-right: 1px solid #ddd; padding: 20px; overflow-y: auto; }
-        .main { flex: 1; padding: 40px; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
         .project-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
         .project-item:hover { background: #f9f9f9; }
-        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; }
-        button { padding: 10px 20px; background: black; color: white; border: none; cursor: pointer; }
-        button.delete { background: red; float: right; }
+        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        label { font-weight: bold; font-size: 12px; display: block; margin-bottom: 5px; color: #555; }
+        button { padding: 10px 20px; background: black; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        button.delete { background: #d32f2f; float: right; }
+        .helper { font-size: 11px; color: #888; margin-top: -10px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -26,12 +28,21 @@
     <form id="form" onsubmit="event.preventDefault(); saveCurrent();">
         <label>Title</label>
         <input id="pTitle" type="text">
+        
         <label>Category</label>
         <input id="pCat" type="text">
+        
         <label>Year</label>
         <input id="pYear" type="text">
-        <label>Image URL</label>
+        
+        <label>Image URL (GitHub Raw Link or External)</label>
         <input id="pImg" type="text">
+        <div class="helper">Tip: Upload to 'images' folder in repo, then paste raw link here.</div>
+
+        <label>YouTube URL (Optional)</label>
+        <input id="pVideo" type="text" placeholder="https://www.youtube.com/watch?v=...">
+        <div class="helper">If set, clicking the project will open this video.</div>
+        
         <label>Description</label>
         <textarea id="pDesc" rows="5"></textarea>
         
@@ -65,15 +76,16 @@
     function edit(index) {
         currentIndex = index;
         const p = projects[index];
-        document.getElementById('pTitle').value = p.title;
-        document.getElementById('pCat').value = p.category;
-        document.getElementById('pYear').value = p.year;
-        document.getElementById('pImg').value = p.image;
-        document.getElementById('pDesc').value = p.description;
+        document.getElementById('pTitle').value = p.title || '';
+        document.getElementById('pCat').value = p.category || '';
+        document.getElementById('pYear').value = p.year || '';
+        document.getElementById('pImg').value = p.image || '';
+        document.getElementById('pVideo').value = p.videoUrl || '';
+        document.getElementById('pDesc').value = p.description || '';
     }
 
     function newProject() {
-        projects.push({ title: 'New Project', category: 'VFX', year: '2026', image: '', description: '' });
+        projects.push({ title: 'New Project', category: 'VFX', year: '2026', image: '', videoUrl: '', description: '' });
         edit(projects.length - 1);
         renderList();
     }
@@ -95,6 +107,7 @@
             category: document.getElementById('pCat').value,
             year: document.getElementById('pYear').value,
             image: document.getElementById('pImg').value,
+            videoUrl: document.getElementById('pVideo').value,
             description: document.getElementById('pDesc').value
         };
         renderList();
@@ -105,7 +118,7 @@
         await fetch('/api/save-projects', {
             method: 'POST',
             body: JSON.stringify(projects),
-            headers: { 'Authorization': 'Basic ' + btoa('admin:lightbox') } // Send auth explicitly just in case browser doesn't auto-send on fetch
+            headers: { 'Authorization': 'Basic ' + btoa('admin:lightbox') }
         });
         alert('Saved!');
     }
