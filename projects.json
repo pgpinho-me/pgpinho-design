@@ -4,8 +4,8 @@
         "title": "1618",
         "category": "Feature Film VFX",
         "year": "2020",
-        "image": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "image": "images/LIGHTBOX_6969_REEL_VFX_1618.jpg",
+        "videoUrl": "https://youtu.be/a9nIH5jJ5Uk",
         "description": "VFX Supervision for the historical drama produced by Lightbox."
     },
     {
@@ -31,8 +31,8 @@
         "title": "FC Porto Museum",
         "category": "Multimedia",
         "year": "2013",
-        "image": "https://via.placeholder.com/600x400/0051ba/fff?text=FC+Porto",
-        "videoUrl": "",
+        "image": "https://www.youtube.com/watch?v=UPkj8PAdxG0/maxresdefault.jpg",
+        "videoUrl": "https://www.youtube.com/watch?v=UPkj8PAdxG0",
         "description": "Interactive content production and supervision for the museum."
     },
     {
@@ -41,7 +41,16 @@
         "category": "Feature Film",
         "year": "2012",
         "image": "https://via.placeholder.com/600x400/fc0/000?text=Balas+3",
-        "videoUrl": "",
+        "videoUrl": "https://www.youtube.com/watch?v=OzHw3_QooBU",
         "description": "Cult classic action-comedy VFX."
+    },
+    {
+        "id": 1770232952385,
+        "title": "Bad Investigate",
+        "category": "VFX",
+        "year": "2026",
+        "image": "images/Bad Investigate.jpg",
+        "videoUrl": "https://youtu.be/Qr0651LONAw?si=3b2j58A7EY187n_x",
+        "description": "VFX Supervisor in the Movie."
     }
 ]

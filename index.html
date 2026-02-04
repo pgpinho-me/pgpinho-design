@@ -6,9 +6,12 @@
     <title>PGPinho Design - VFX Supervisor</title>
     <style>
         :root {
-            --bg-color: #080808;
+            --bg-color: #050505;
             --text-color: #f0f0f0;
-            --card-bg: #111;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --g1: #4a00e0;
+            --g2: #8e2de2;
+            --g3: #ff0099;
         }
 
         body {
@@ -17,218 +20,89 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
+            min-height: 100vh;
         }
+
+        /* Animated Background */
+        .gradient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; background: var(--bg-color); }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: float 20s infinite alternate ease-in-out; }
+        .blob-1 { width: 60vw; height: 60vw; background: var(--g1); top: -10%; left: -10%; animation-delay: 0s; }
+        .blob-2 { width: 50vw; height: 50vw; background: var(--g2); bottom: -10%; right: -10%; animation-delay: -5s; }
+        .blob-3 { width: 40vw; height: 40vw; background: var(--g3); top: 40%; left: 40%; animation-delay: -10s; }
+        @keyframes float { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(30px, 50px) scale(1.1); } 100% { transform: translate(-20px, -40px) scale(0.9); } }
 
         /* Nav */
-        nav {
-            padding: 30px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            box-sizing: border-box;
-            background: rgba(8,8,8,0.9);
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .brand {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-        }
-
-        .nav-links a {
-            color: #888;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: #fff; }
+        nav { padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; box-sizing: border-box; z-index: 100; background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .brand { font-size: 24px; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { color: #ddd; text-decoration: none; margin-left: 30px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; cursor: pointer; }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.5); }
+        .lang-switch { margin-left: 30px; font-weight: 700; color: #fff; cursor: pointer; opacity: 0.7; }
+        .lang-switch:hover { opacity: 1; }
 
         /* Hero */
-        .hero {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            padding: 0 40px;
-            position: relative;
-        }
-
-        h1 {
-            font-size: 8vw;
-            line-height: 0.9;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin: 0;
-            mix-blend-mode: exclusion;
-        }
-
-        .hero-sub {
-            font-size: 1.2rem;
-            color: #888;
-            margin-top: 20px;
-            max-width: 400px;
-            line-height: 1.6;
-        }
-
-        /* Projects Grid */
-        .projects-section {
-            padding: 40px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
+        .hero { height: 90vh; display: flex; align-items: center; padding: 0 40px; position: relative; }
+        h1 { font-size: 8vw; line-height: 0.9; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .hero-sub { font-size: 1.2rem; color: #ccc; margin-top: 20px; max-width: 400px; line-height: 1.6; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            h1 { font-size: 15vw; }
-        }
+        .btn-detail { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 12px 30px; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: all 0.4s ease; backdrop-filter: blur(5px); margin-top: 20px; }
+        .btn-detail:hover { background: #fff; color: #000; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 
-        .project-card {
-            background: var(--card-bg);
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 16/9;
-            cursor: pointer;
-            transition: transform 0.4s ease;
-        }
+        /* Projects */
+        .projects-section { padding: 40px; position: relative; z-index: 10; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 15vw; } }
+        .project-card { background: var(--card-bg); position: relative; overflow: hidden; aspect-ratio: 16/9; cursor: pointer; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: transform 0.6s ease, opacity 0.6s ease; }
+        .project-card:hover { transform: scale(0.98); border-color: rgba(255,255,255,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .project-card:hover img { transform: scale(1.05); opacity: 0.4; }
+        .project-info { position: absolute; bottom: 20px; left: 20px; z-index: 2; pointer-events: none; transform: translateY(10px); transition: transform 0.4s ease; }
+        .project-card:hover .project-info { transform: translateY(0); }
+        .project-title { font-size: 2rem; font-weight: 700; text-transform: uppercase; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,1); }
+        .project-meta { font-size: 0.9rem; color: #ddd; margin-top: 5px; text-shadow: 0 2px 10px rgba(0,0,0,1); }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5); width: 80px; height: 80px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(255,255,255,0.2); }
+        .project-card:hover .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .play-icon::after { content: ''; display: block; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid white; margin-left: 5px; }
 
-        .project-card:hover { transform: scale(0.98); }
-
-        .project-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: opacity 0.4s;
-        }
-
-        .project-card:hover img { opacity: 1; }
-
-        .project-info {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .project-title {
-            font-size: 2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .project-meta {
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-top: 5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .project-card:hover .play-icon { opacity: 1; }
-
-        .play-icon::after {
-            content: '';
-            display: block;
-            width: 0; 
-            height: 0; 
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-left: 16px solid white;
-            margin-left: 4px;
-        }
-
-        /* Video Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            width: 80%;
-            max-width: 1200px;
-            aspect-ratio: 16/9;
-            background: #000;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            z-index: 1001;
-        }
+        /* Contacts Section */
+        .contacts-section { padding: 100px 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); }
+        .contact-title { font-size: 4vw; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; }
+        .contact-btn { display: inline-block; background: #fff; color: #000; padding: 15px 40px; text-decoration: none; font-weight: bold; text-transform: uppercase; border-radius: 50px; transition: transform 0.2s; }
+        .contact-btn:hover { transform: scale(1.05); }
 
         /* Footer */
-        footer {
-            padding: 80px 40px;
-            border-top: 1px solid #222;
-            display: flex;
-            justify-content: space-between;
-            color: #666;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
+        footer { padding: 80px 40px; display: flex; justify-content: space-between; color: #666; font-size: 12px; text-transform: uppercase; background: rgba(0,0,0,0.8); position: relative; z-index: 10; }
 
+        /* Modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; }
+        .modal-content { width:80%; max-width:1200px; aspect-ratio:16/9; background:#000; margin:auto; position:relative; top:50%; transform:translateY(-50%); }
+        .close-btn { position:absolute; top:20px; right:40px; font-size:40px; color:#fff; cursor:pointer; z-index:1001; }
     </style>
 </head>
 <body>
 
+    <div class="gradient-bg">
+        <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div>
+    </div>
+
     <nav>
         <div class="brand">PGPinho Design</div>
         <div class="nav-links">
-            <a href="#projects">Work</a>
-            <a href="#about">About</a>
+            <a href="#projects" data-key="nav_work">Work</a>
+            <a href="#about" data-key="nav_about">About</a>
+            <a href="#contact" data-key="nav_contact">Contact</a>
             <a href="admin/index.html">Admin</a>
+            <div class="lang-switch" onclick="toggleLang()">EN / PT</div>
         </div>
     </nav>
 
     <section class="hero" id="about">
         <div>
-            <h1>Visual<br>Engineering</h1>
+            <h1 data-key="hero_title">Visual<br>Engineering</h1>
             <div class="hero-sub">
-                Paulo Pinho. VFX Supervisor & Motion Designer based in Porto.
-                Creating digital realities since 2000.
+                <span data-key="hero_sub">Paulo Pinho. VFX Supervisor & Motion Designer based in Porto.<br>Creating digital realities since 2000.</span>
+                <br><br>
+                <button onclick="openCV()" class="btn-detail" data-key="btn_details">Details</button>
             </div>
         </div>
     </section>
@@ -237,75 +111,137 @@
         <div class="grid" id="projectsGrid"></div>
     </section>
 
+    <section id="contact" class="contacts-section">
+        <h2 class="contact-title" data-key="contact_title">Let's Talk</h2>
+        <p style="color:#ccc; margin-bottom:40px; font-size:1.2rem;" data-key="contact_sub">Available for freelance projects and consulting.</p>
+        <a href="mailto:paulo@lightbox.pt" class="contact-btn" data-key="contact_email">Email Me</a>
+        <div style="margin-top:40px; font-size:14px; color:#888;">
+            +351 933 295 306<br>Porto, Portugal
+        </div>
+    </section>
+
     <footer>
-        <div>&copy; 2026 PGPinho Design</div>
+        <div data-key="footer_rights">&copy; 2026 PGPinho Design</div>
         <div>Lightbox | Porto</div>
     </footer>
 
     <!-- Video Modal -->
-    <div id="videoModal" class="modal" onclick="closeModal()">
+    <div id="videoModal" class="modal" style="background:rgba(0,0,0,0.95);" onclick="closeModal()">
         <span class="close-btn">&times;</span>
-        <div class="modal-content">
-            <iframe id="youtubePlayer" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="modal-content"><iframe id="youtubePlayer" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- CV Modal -->
+    <div id="cvModal" class="modal" style="background:rgba(0,0,0,0.98); overflow-y:auto; -webkit-overflow-scrolling:touch; padding-top:50px;">
+        <span class="close-btn" onclick="closeCV()" style="position:fixed; top:30px; right:40px; z-index:2001;">&times;</span>
+        <div class="modal-content" style="background:transparent; max-width:800px; margin:0 auto; padding:40px; padding-bottom:150px; color:#ddd; font-family:'Helvetica Neue', sans-serif; position:static; transform:none; height:auto;">
+            <h2 style="font-size:32px; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:40px;" data-key="modal_title">Experience</h2>
+            <!-- CV Content Static for now (can be dynamic too if needed) -->
+            <div style="margin-bottom:50px;">
+                <h3 style="font-size:24px; color:#fff; margin-bottom:5px;">Supervisor of Graphics & Multimedia Dept.</h3>
+                <div style="color:#888; font-size:14px; margin-bottom:15px;">Lightbox | Porto | 2007 - Present</div>
+                <ul style="line-height:1.8; color:#bbb;">
+                    <li>Responsible for the graphics and multimedia department since 2007.</li>
+                    <li>Involved in over 750 projects: 160+ TV spots, 585+ institutional films, and 5 Fiction projects.</li>
+                    <li><strong>VFX Supervisor</strong> for feature films: "1618", "Sefarad", "Bad Investigate", "Balas & Bolinhos 3".</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
-        // Load projects
-        fetch('projects.json')
-            .then(response => response.json())
-            .then(projects => {
-                const grid = document.getElementById('projectsGrid');
-                projects.forEach(p => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card';
-                    
-                    let playIcon = '';
-                    if(p.videoUrl) playIcon = '<div class="play-icon"></div>';
+        let currentLang = 'en';
+        let translations = {};
+        let projectsData = [];
 
-                    card.innerHTML = `
-                        <img src="${p.image}" alt="${p.title}">
-                        ${playIcon}
-                        <div class="project-info">
-                            <h2 class="project-title">${p.title}</h2>
-                            <div class="project-meta">${p.category} — ${p.year}</div>
-                        </div>
-                    `;
-                    
-                    card.onclick = () => {
-                        if(p.videoUrl) openVideo(p.videoUrl);
-                    };
-                    
-                    grid.appendChild(card);
-                });
+        // Load All Data
+        Promise.all([
+            fetch('settings.json?t=' + Date.now()).then(r => r.ok ? r.json() : {}),
+            fetch('projects.json?t=' + Date.now()).then(r => r.json()),
+            fetch('lang.json?t=' + Date.now()).then(r => r.json())
+        ]).then(([settings, projects, lang]) => {
+            
+            // Apply Settings
+            const root = document.documentElement;
+            if(settings.bgColor) root.style.setProperty('--bg-color', settings.bgColor);
+            if(settings.color1) root.style.setProperty('--g1', settings.color1);
+            if(settings.color2) root.style.setProperty('--g2', settings.color2);
+            if(settings.color3) root.style.setProperty('--g3', settings.color3);
+
+            // Store Data
+            translations = lang;
+            projectsData = projects;
+
+            // Render Grid
+            renderProjects();
+        });
+
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+            projectsData.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                let playIcon = p.videoUrl ? '<div class="play-icon"></div>' : '';
+                
+                // Choose description based on language (fallback to default desc)
+                // Assuming p.description is default/en. If you add description_pt later, use it here.
+                let desc = (currentLang === 'pt' && p.description_pt) ? p.description_pt : p.description;
+
+                card.innerHTML = `
+                    <img src="${p.image}" alt="${p.title}">
+                    ${playIcon}
+                    <div class="project-info">
+                        <h2 class="project-title">${p.title}</h2>
+                        <div class="project-meta">${p.category} — ${p.year}</div>
+                    </div>
+                `;
+                card.onclick = () => { if(p.videoUrl) openVideo(p.videoUrl); };
+                grid.appendChild(card);
             });
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'pt' : 'en';
+            updateText();
+            renderProjects(); // Re-render projects in case we add bilingual fields later
+        }
+
+        function updateText() {
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(translations[currentLang] && translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
 
         function openVideo(url) {
             let videoId = '';
-            // Extract YouTube ID
-            if (url.includes('youtube.com/watch?v=')) {
-                videoId = url.split('v=')[1];
-            } else if (url.includes('youtu.be/')) {
-                videoId = url.split('youtu.be/')[1];
-            }
+            if (url.includes('youtube.com/watch?v=')) { videoId = url.split('v=')[1]; } 
+            else if (url.includes('youtu.be/')) { videoId = url.split('youtu.be/')[1]; }
             
             if (videoId) {
-                // Remove extra params if any
                 const ampersandPosition = videoId.indexOf('&');
-                if(ampersandPosition !== -1) {
-                    videoId = videoId.substring(0, ampersandPosition);
-                }
-                
+                if(ampersandPosition !== -1) videoId = videoId.substring(0, ampersandPosition);
                 document.getElementById('youtubePlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                document.getElementById('videoModal').style.display = 'flex';
-            } else {
-                window.open(url, '_blank');
-            }
+                document.getElementById('videoModal').style.display = 'block';
+            } else { window.open(url, '_blank'); }
         }
 
         function closeModal() {
             document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('youtubePlayer').src = ''; // Stop video
+            document.getElementById('youtubePlayer').src = '';
+        }
+
+        function openCV() {
+            document.getElementById('cvModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCV() {
+            document.getElementById('cvModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
     </script>
 

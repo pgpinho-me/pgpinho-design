@@ -5,66 +5,106 @@
     <title>CMS - PGPinho Design</title>
     <style>
         body { font-family: sans-serif; display: flex; height: 100vh; margin: 0; background: #f0f0f0; }
-        .sidebar { width: 300px; background: white; border-right: 1px solid #ddd; padding: 20px; overflow-y: auto; }
+        .sidebar { width: 300px; background: white; border-right: 1px solid #ddd; padding: 20px; overflow-y: auto; display:flex; flex-direction:column; }
         .main { flex: 1; padding: 40px; overflow-y: auto; }
         .project-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
         .project-item:hover { background: #f9f9f9; }
-        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        input[type="text"], textarea { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
         label { font-weight: bold; font-size: 12px; display: block; margin-bottom: 5px; color: #555; }
         button { padding: 10px 20px; background: black; color: white; border: none; cursor: pointer; border-radius: 4px; }
         button.delete { background: #d32f2f; float: right; }
         .helper { font-size: 11px; color: #888; margin-top: -10px; margin-bottom: 15px; }
+        .upload-area { border: 2px dashed #ccc; padding: 20px; text-align: center; margin-bottom: 15px; border-radius: 4px; }
+        
+        .theme-section { margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; }
+        .color-row { display: flex; align-items: center; margin-bottom: 10px; }
+        .color-row input { margin-left: auto; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div style="background:#fff; padding:10px 20px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between; align-items:center;">
+<div style="background:#fff; padding:10px 20px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between; align-items:center; position:fixed; top:0; width:100%; box-sizing:border-box; z-index:10;">
     <h1 style="margin:0; font-size:18px;">PGPinho Admin</h1>
     <a href="../index.html" style="text-decoration:none; color:#007aff; font-weight:500;">← Back to Site</a>
 </div>
 
-<div style="display:flex; height:calc(100vh - 50px);">
-<div class="sidebar">
-    <h3>Projects <button onclick="newProject()" style="padding:5px; font-size:12px;">+</button></h3>
-    <div id="list"></div>
-</div>
+<div style="display:flex; height:100vh; padding-top:50px; box-sizing:border-box;">
+    <div class="sidebar">
+        <h3>Projects <button onclick="newProject()" style="padding:5px; font-size:12px;">+</button></h3>
+        <div id="list" style="flex:1; overflow-y:auto;"></div>
 
-<div class="main">
-    <h2 id="editorTitle">Edit Project</h2>
-    <form id="form" onsubmit="event.preventDefault(); saveCurrent();">
-        <label>Title</label>
-        <input id="pTitle" type="text">
-        
-        <label>Category</label>
-        <input id="pCat" type="text">
-        
-        <label>Year</label>
-        <input id="pYear" type="text">
-        
-        <label>Image URL (GitHub Raw Link or External)</label>
-        <input id="pImg" type="text">
-        <div class="helper">Tip: Upload to 'images' folder in repo, then paste raw link here.</div>
+        <div class="theme-section">
+            <h3>Theme Settings</h3>
+            <div class="color-row">
+                <label>Background</label>
+                <input type="color" id="bgColor">
+            </div>
+            <div class="color-row">
+                <label>Gradient 1</label>
+                <input type="color" id="color1">
+            </div>
+            <div class="color-row">
+                <label>Gradient 2</label>
+                <input type="color" id="color2">
+            </div>
+            <div class="color-row">
+                <label>Gradient 3</label>
+                <input type="color" id="color3">
+            </div>
+            <button onclick="saveSettings()" style="width:100%; margin-top:10px;">Update Theme</button>
+        </div>
+    </div>
 
-        <label>YouTube URL (Optional)</label>
-        <input id="pVideo" type="text" placeholder="https://www.youtube.com/watch?v=...">
-        <div class="helper">If set, clicking the project will open this video.</div>
-        
-        <label>Description</label>
-        <textarea id="pDesc" rows="5"></textarea>
-        
-        <button type="submit">Save Changes</button>
-        <button type="button" class="delete" onclick="deleteCurrent()">Delete</button>
-    </form>
+    <div class="main">
+        <h2 id="editorTitle">Edit Project</h2>
+        <form id="form" onsubmit="event.preventDefault(); saveCurrent();">
+            <label>Title</label>
+            <input id="pTitle" type="text">
+            <label>Category</label>
+            <input id="pCat" type="text">
+            <label>Year</label>
+            <input id="pYear" type="text">
+            
+            <label>Image</label>
+            <div class="upload-area">
+                <input type="file" id="fileInput" onchange="uploadImage()">
+                <div style="margin-top:5px; font-size:12px; color:#666;">Select an image to upload</div>
+            </div>
+            <input id="pImg" type="text" placeholder="Image URL (auto-filled after upload)">
+            
+            <label>YouTube URL</label>
+            <input id="pVideo" type="text">
+            
+            <label>Description</label>
+            <textarea id="pDesc" rows="5"></textarea>
+            
+            <button type="submit">Save Changes</button>
+            <button type="button" class="delete" onclick="deleteCurrent()">Delete</button>
+        </form>
+    </div>
 </div>
 
 <script>
     let projects = [];
+    let settings = {};
     let currentIndex = -1;
+    const authHeader = { 'Authorization': 'Basic ' + btoa('admin:lightbox') };
 
     async function load() {
-        const res = await fetch('/projects.json');
-        projects = await res.json();
+        // Load Projects with cache busting
+        const resP = await fetch('/projects.json?t=' + Date.now());
+        projects = await resP.json();
         renderList();
+
+        // Load Settings with cache busting
+        const resS = await fetch('/settings.json?t=' + Date.now());
+        if(resS.ok) {
+            settings = await resS.json();
+            document.getElementById('bgColor').value = settings.bgColor || '#050505';
+            document.getElementById('color1').value = settings.color1 || '#4a00e0';
+            document.getElementById('color2').value = settings.color2 || '#8e2de2';
+            document.getElementById('color3').value = settings.color3 || '#ff0099';
+        }
     }
 
     function renderList() {
@@ -88,12 +128,32 @@
         document.getElementById('pImg').value = p.image || '';
         document.getElementById('pVideo').value = p.videoUrl || '';
         document.getElementById('pDesc').value = p.description || '';
+        document.getElementById('fileInput').value = ''; 
     }
 
     function newProject() {
         projects.push({ title: 'New Project', category: 'VFX', year: '2026', image: '', videoUrl: '', description: '' });
         edit(projects.length - 1);
         renderList();
+    }
+
+    async function uploadImage() {
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) return;
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        try {
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                headers: authHeader,
+                body: formData
+            });
+            const data = await res.json();
+            if (data.status === 'ok') {
+                document.getElementById('pImg').value = data.url;
+                alert('Upload successful!');
+            } else { alert('Upload failed: ' + data.error); }
+        } catch (e) { alert('Error: ' + e); }
     }
 
     function deleteCurrent() {
@@ -124,14 +184,28 @@
         await fetch('/api/save-projects', {
             method: 'POST',
             body: JSON.stringify(projects),
-            headers: { 'Authorization': 'Basic ' + btoa('admin:lightbox') }
+            headers: authHeader
         });
-        alert('Saved!');
+        alert('Project Saved!');
+    }
+
+    async function saveSettings() {
+        const newSettings = {
+            bgColor: document.getElementById('bgColor').value,
+            color1: document.getElementById('color1').value,
+            color2: document.getElementById('color2').value,
+            color3: document.getElementById('color3').value
+        };
+        await fetch('/api/save-settings', {
+            method: 'POST',
+            body: JSON.stringify(newSettings),
+            headers: authHeader
+        });
+        alert('Theme Updated! Refresh the site to see changes.');
     }
 
     load();
 </script>
 
-</div>
 </body>
 </html>
