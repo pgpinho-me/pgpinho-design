@@ -73,45 +73,10 @@
         /* Footer */
         footer { padding: 80px 40px; display: flex; justify-content: space-between; color: #666; font-size: 12px; text-transform: uppercase; background: rgba(0,0,0,0.8); position: relative; z-index: 10; }
 
-        /* Modal - Fixed Scroll Logic */
-        .modal { 
-            display:none; 
-            position:fixed; 
-            top:0; left:0; width:100%; height:100%; 
-            z-index:1000; 
-            overflow-y: auto; /* Enable scroll on the modal container itself */
-            -webkit-overflow-scrolling: touch;
-            background: rgba(0,0,0,0.98);
-        }
-        
-        /* For video modal specifically */
-        #videoModal { align-items: center; justify-content: center; display: none; }
-        #videoModal.active { display: flex; } /* Flex for centering video */
-
-        .modal-content { 
-            width: 80%; max-width: 900px; 
-            background: transparent; 
-            margin: 50px auto 100px auto; /* Margin ensures scroll space at bottom */
-            color: #ddd; 
-            font-family: 'Helvetica Neue', sans-serif;
-            position: relative;
-        }
-        
-        .close-btn { position:fixed; top:30px; right:40px; font-size:40px; color:#fff; cursor:pointer; z-index:2001; opacity: 0.8; transition: opacity 0.3s; }
-        .close-btn:hover { opacity: 1; transform: scale(1.1); }
-
-        /* CV Text Styles */
-        .cv-section { margin-bottom: 60px; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 30px; }
-        .cv-role { font-size: 24px; color: #fff; margin-bottom: 5px; font-weight: 600; }
-        .cv-meta { color: #888; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .cv-details { line-height: 1.8; color: #bbb; }
-        .cv-details li { margin-bottom: 8px; }
-        .cv-project-list { margin-top: 15px; font-size: 15px; }
-        .highlight-year { color: var(--g3); font-weight: bold; }
-
-        /* Language Containers */
-        .lang-en { display: block; }
-        .lang-pt { display: none; }
+        /* Modal */
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; }
+        .modal-content { width:80%; max-width:1200px; aspect-ratio:16/9; background:#000; margin:auto; position:relative; top:50%; transform:translateY(-50%); }
+        .close-btn { position:absolute; top:20px; right:40px; font-size:40px; color:#fff; cursor:pointer; z-index:1001; }
     </style>
 </head>
 <body>
@@ -163,125 +128,24 @@
     <!-- Video Modal -->
     <div id="videoModal" class="modal" style="background:rgba(0,0,0,0.95);" onclick="closeModal()">
         <span class="close-btn">&times;</span>
-        <div class="modal-content" style="aspect-ratio:16/9;">
-            <iframe id="youtubePlayer" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
+        <div class="modal-content"><iframe id="youtubePlayer" width="100%" height="100%" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
     </div>
 
     <!-- CV Modal -->
-    <div id="cvModal" class="modal">
-        <span class="close-btn" onclick="closeCV()">&times;</span>
-        <div class="modal-content">
+    <div id="cvModal" class="modal" style="background:rgba(0,0,0,0.98); overflow-y:auto; -webkit-overflow-scrolling:touch; padding-top:50px;">
+        <span class="close-btn" onclick="closeCV()" style="position:fixed; top:30px; right:40px; z-index:2001;">&times;</span>
+        <div class="modal-content" style="background:transparent; max-width:800px; margin:0 auto; padding:40px; padding-bottom:150px; color:#ddd; font-family:'Helvetica Neue', sans-serif; position:static; transform:none; height:auto;">
             <h2 style="font-size:32px; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:40px;" data-key="modal_title">Experience</h2>
-            
-            <!-- PORTUGUESE CONTENT -->
-            <div class="lang-pt">
-                <div class="cv-section">
-                    <div class="cv-role">Supervisor do Departamento de Grafismo</div>
-                    <div class="cv-meta">Lightbox | Porto | 2007 - Presente</div>
-                    <ul class="cv-details">
-                        <li>Responsável pelo departamento de grafismo e multimédia desde 2007.</li>
-                        <li>Envolvido diretamente em mais de 750 projetos: ~160 spots TV, +585 filmes institucionais e 5 de Ficção.</li>
-                        <li>Marcas: Continente, Serralves, Carglass, Optimus, Hyundai, Zippy, Sotinco, Real Companhia Velha, Modalfa, FC Porto, Kasa, Rádio Popular, Note!</li>
-                    </ul>
-                    <div class="cv-project-list">
-                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" e "2000 EJC" (Dez '24 - Mai '25)</p>
-                        <p><span class="highlight-year">2023</span> • VFX "1506 The Lisbon Genocide"</p>
-                        <p><span class="highlight-year">2021</span> • VFX Supervisor Piloto TV "Uma coisa leva a Outra"</p>
-                        <p><span class="highlight-year">2019</span> • VFX Supervisor Longa "1618"</p>
-                        <p><span class="highlight-year">2018</span> • VFX Supervisor Longa "Sefarad"</p>
-                        <p><span class="highlight-year">2016</span> • VFX Série TV "Vidago Palace" (RTP)</p>
-                        <p><span class="highlight-year">2015</span> • Produções Audiovisuais Museu de Serralves (desde 2015)</p>
-                        <p><span class="highlight-year">2014</span> • VFX "Bad Investigate"</p>
-                        <p><span class="highlight-year">2013</span> • Supervisão Conteúdos Museu FC Porto</p>
-                        <p><span class="highlight-year">2012</span> • VFX "Balas & Bolinhos 3" e "Douro Azul" (3D)</p>
-                        <p><span class="highlight-year">2010</span> • VFX "Leopoldina" (DVD Interativo) e "Dente de Leão"</p>
-                    </div>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Responsável do Departamento de Web Design</div>
-                    <div class="cv-meta">EPI | Lisboa | 2005 - 2007</div>
-                    <ul class="cv-details">
-                        <li>Responsável por todo o Design e produção multimédia do grupo MADRE SGPS.</li>
-                        <li>Desenvolvimento de mais de 10 websites num único ano.</li>
-                    </ul>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Web Designer & Motion Graphics</div>
-                    <div class="cv-meta">Play Audiovisuais | V. Nova de Gaia | 2004 - 2005</div>
-                    <ul class="cv-details">
-                        <li>Grafismo para filmes e assinaturas de marca (Worten, Continente "20 anos", Vobis).</li>
-                        <li>Projeto de animação "Os Espadinhas" (Canal 1).</li>
-                    </ul>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Diretor Criativo</div>
-                    <div class="cv-meta">Cinerama, Lda. | Matosinhos | 2000 - 2004</div>
-                    <ul class="cv-details">
-                        <li>Direção Criativa da série "TaninoWar" (Storyboard e Personagens).</li>
-                        <li>Supervisão de equipa na curta "A Guerra do Tanino".</li>
-                        <li>Animação 3D para assinatura publicitária da CIN.</li>
-                    </ul>
-                </div>
+            <!-- CV Content Static for now (can be dynamic too if needed) -->
+            <div style="margin-bottom:50px;">
+                <h3 style="font-size:24px; color:#fff; margin-bottom:5px;">Supervisor of Graphics & Multimedia Dept.</h3>
+                <div style="color:#888; font-size:14px; margin-bottom:15px;">Lightbox | Porto | 2007 - Present</div>
+                <ul style="line-height:1.8; color:#bbb;">
+                    <li>Responsible for the graphics and multimedia department since 2007.</li>
+                    <li>Involved in over 750 projects: 160+ TV spots, 585+ institutional films, and 5 Fiction projects.</li>
+                    <li><strong>VFX Supervisor</strong> for feature films: "1618", "Sefarad", "Bad Investigate", "Balas & Bolinhos 3".</li>
+                </ul>
             </div>
-
-            <!-- ENGLISH CONTENT -->
-            <div class="lang-en">
-                <div class="cv-section">
-                    <div class="cv-role">Supervisor of Graphics & Multimedia Dept.</div>
-                    <div class="cv-meta">Lightbox | Porto | 2007 - Present</div>
-                    <ul class="cv-details">
-                        <li>Head of the graphics and multimedia department since 2007.</li>
-                        <li>Directly involved in over 750 projects: ~160 TV spots, +585 institutional films, and 5 Fiction features.</li>
-                        <li>Brands: Continente, Serralves, Carglass, Optimus, Hyundai, Zippy, Sotinco, Real Companhia Velha, Modalfa, FC Porto, Kasa, Rádio Popular, Note!</li>
-                    </ul>
-                    <div class="cv-project-list">
-                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" & "2000 EJC" (Dec '24 - May '25)</p>
-                        <p><span class="highlight-year">2023</span> • VFX "1506 The Lisbon Genocide"</p>
-                        <p><span class="highlight-year">2021</span> • VFX Supervisor TV Pilot "Uma coisa leva a Outra"</p>
-                        <p><span class="highlight-year">2019</span> • VFX Supervisor Feature "1618"</p>
-                        <p><span class="highlight-year">2018</span> • VFX Supervisor Feature "Sefarad"</p>
-                        <p><span class="highlight-year">2016</span> • VFX TV Series "Vidago Palace" (RTP)</p>
-                        <p><span class="highlight-year">2015</span> • Serralves Museum Audiovisual Productions (since 2015)</p>
-                        <p><span class="highlight-year">2014</span> • VFX "Bad Investigate"</p>
-                        <p><span class="highlight-year">2013</span> • Multimedia Content Supervision for FC Porto Museum</p>
-                        <p><span class="highlight-year">2012</span> • VFX "Balas & Bolinhos 3" & "Douro Azul" (3D)</p>
-                        <p><span class="highlight-year">2010</span> • VFX "Leopoldina" (Interactive DVD) & "Dente de Leão"</p>
-                    </div>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Head of Web Design Dept.</div>
-                    <div class="cv-meta">EPI | Lisbon | 2005 - 2007</div>
-                    <ul class="cv-details">
-                        <li>Responsible for all Design and multimedia production for MADRE SGPS group.</li>
-                        <li>Delivered over 10 new websites in a single year.</li>
-                    </ul>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Web Designer & Motion Graphics</div>
-                    <div class="cv-meta">Play Audiovisuais | V. Nova de Gaia | 2004 - 2005</div>
-                    <ul class="cv-details">
-                        <li>Graphics for films and brand signatures (Worten, Continente "20 years", Vobis).</li>
-                        <li>Animation project "Os Espadinhas" (Canal 1).</li>
-                    </ul>
-                </div>
-
-                <div class="cv-section">
-                    <div class="cv-role">Creative Director</div>
-                    <div class="cv-meta">Cinerama, Lda. | Matosinhos | 2000 - 2004</div>
-                    <ul class="cv-details">
-                        <li>Creative Direction for "TaninoWar" series (Storyboard & Character Design).</li>
-                        <li>Team supervision for short film "A Guerra do Tanino".</li>
-                        <li>3D Animation for CIN brand signature.</li>
-                    </ul>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -320,6 +184,8 @@
                 card.className = 'project-card';
                 let playIcon = p.videoUrl ? '<div class="play-icon"></div>' : '';
                 
+                // Choose description based on language (fallback to default desc)
+                // Assuming p.description is default/en. If you add description_pt later, use it here.
                 let desc = (currentLang === 'pt' && p.description_pt) ? p.description_pt : p.description;
 
                 card.innerHTML = `
@@ -337,20 +203,8 @@
 
         function toggleLang() {
             currentLang = currentLang === 'en' ? 'pt' : 'en';
-            
-            // Update simple text keys
             updateText();
-            
-            // Toggle CV Sections
-            if(currentLang === 'pt') {
-                document.querySelector('.lang-pt').style.display = 'block';
-                document.querySelector('.lang-en').style.display = 'none';
-            } else {
-                document.querySelector('.lang-pt').style.display = 'none';
-                document.querySelector('.lang-en').style.display = 'block';
-            }
-
-            renderProjects(); 
+            renderProjects(); // Re-render projects in case we add bilingual fields later
         }
 
         function updateText() {
@@ -371,25 +225,23 @@
                 const ampersandPosition = videoId.indexOf('&');
                 if(ampersandPosition !== -1) videoId = videoId.substring(0, ampersandPosition);
                 document.getElementById('youtubePlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                document.getElementById('videoModal').style.display = 'flex';
-                document.getElementById('videoModal').classList.add('active');
+                document.getElementById('videoModal').style.display = 'block';
             } else { window.open(url, '_blank'); }
         }
 
         function closeModal() {
             document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('videoModal').classList.remove('active');
             document.getElementById('youtubePlayer').src = '';
         }
 
         function openCV() {
             document.getElementById('cvModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Stop background scroll
+            document.body.style.overflow = 'hidden';
         }
 
         function closeCV() {
             document.getElementById('cvModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scroll
+            document.body.style.overflow = 'auto';
         }
     </script>
 

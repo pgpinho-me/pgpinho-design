@@ -1,0 +1,28 @@
+{
+    "en": {
+        "nav_work": "Work",
+        "nav_about": "About",
+        "nav_contact": "Contact",
+        "hero_title": "Visual<br>Engineering",
+        "hero_sub": "Paulo Pinho. VFX Supervisor & Motion Designer based in Porto.<br>Creating digital realities since 2000.",
+        "btn_details": "Details",
+        "modal_title": "Experience",
+        "footer_rights": "&copy; 2026 PGPinho Design",
+        "contact_title": "Let's Talk",
+        "contact_sub": "Available for freelance projects and consulting.",
+        "contact_email": "Email me"
+    },
+    "pt": {
+        "nav_work": "Trabalhos",
+        "nav_about": "Sobre",
+        "nav_contact": "Contactos",
+        "hero_title": "Engenharia<br>Visual",
+        "hero_sub": "Paulo Pinho. Supervisor de VFX & Motion Designer no Porto.<br>A criar realidades digitais desde 2000.",
+        "btn_details": "Detalhes",
+        "modal_title": "Experiência",
+        "footer_rights": "&copy; 2026 PGPinho Design",
+        "contact_title": "Vamos Falar",
+        "contact_sub": "Disponível para projetos freelance e consultoria.",
+        "contact_email": "Enviar Email"
+    }
+}
