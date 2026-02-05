@@ -73,25 +73,24 @@
         /* Footer */
         footer { padding: 80px 40px; display: flex; justify-content: space-between; color: #666; font-size: 12px; text-transform: uppercase; background: rgba(0,0,0,0.8); position: relative; z-index: 10; }
 
-        /* Modal - Fixed Scroll Logic */
+        /* Modal */
         .modal { 
             display:none; 
             position:fixed; 
             top:0; left:0; width:100%; height:100%; 
             z-index:1000; 
-            overflow-y: auto; /* Enable scroll on the modal container itself */
+            overflow-y: auto; 
             -webkit-overflow-scrolling: touch;
             background: rgba(0,0,0,0.98);
         }
         
-        /* For video modal specifically */
         #videoModal { align-items: center; justify-content: center; display: none; }
-        #videoModal.active { display: flex; } /* Flex for centering video */
+        #videoModal.active { display: flex; }
 
         .modal-content { 
             width: 80%; max-width: 900px; 
             background: transparent; 
-            margin: 50px auto 100px auto; /* Margin ensures scroll space at bottom */
+            margin: 50px auto 100px auto;
             color: #ddd; 
             font-family: 'Helvetica Neue', sans-serif;
             position: relative;
@@ -104,10 +103,11 @@
         .cv-section { margin-bottom: 60px; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 30px; }
         .cv-role { font-size: 24px; color: #fff; margin-bottom: 5px; font-weight: 600; }
         .cv-meta { color: #888; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .cv-details { line-height: 1.8; color: #bbb; }
+        .cv-details { line-height: 1.8; color: #bbb; margin-top: 10px; }
         .cv-details li { margin-bottom: 8px; }
         .cv-project-list { margin-top: 15px; font-size: 15px; }
         .highlight-year { color: var(--g3); font-weight: bold; }
+        .section-header { font-size: 32px; border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 40px; color: #fff; margin-top: 60px; }
 
         /* Language Containers */
         .lang-en { display: block; }
@@ -172,10 +172,11 @@
     <div id="cvModal" class="modal">
         <span class="close-btn" onclick="closeCV()">&times;</span>
         <div class="modal-content">
-            <h2 style="font-size:32px; border-bottom:1px solid #333; padding-bottom:20px; margin-bottom:40px;" data-key="modal_title">Experience</h2>
             
             <!-- PORTUGUESE CONTENT -->
             <div class="lang-pt">
+                <h2 class="section-header">Experiência</h2>
+                
                 <div class="cv-section">
                     <div class="cv-role">Supervisor do Departamento de Grafismo</div>
                     <div class="cv-meta">Lightbox | Porto | 2007 - Presente</div>
@@ -185,7 +186,7 @@
                         <li>Marcas: Continente, Serralves, Carglass, Optimus, Hyundai, Zippy, Sotinco, Real Companhia Velha, Modalfa, FC Porto, Kasa, Rádio Popular, Note!</li>
                     </ul>
                     <div class="cv-project-list">
-                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" e "2000 EJC" (Dez '24 - Mai '25)</p>
+                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" e "2000 EJC"</p>
                         <p><span class="highlight-year">2023</span> • VFX "1506 The Lisbon Genocide"</p>
                         <p><span class="highlight-year">2021</span> • VFX Supervisor Piloto TV "Uma coisa leva a Outra"</p>
                         <p><span class="highlight-year">2019</span> • VFX Supervisor Longa "1618"</p>
@@ -212,7 +213,8 @@
                     <div class="cv-role">Web Designer & Motion Graphics</div>
                     <div class="cv-meta">Play Audiovisuais | V. Nova de Gaia | 2004 - 2005</div>
                     <ul class="cv-details">
-                        <li>Grafismo para filmes e assinaturas de marca (Worten, Continente "20 anos", Vobis).</li>
+                        <li>Responsável pelo departamento de Web Design (3 websites realizados).</li>
+                        <li>Grafismo para filmes e assinaturas de marca (Worten, Continente "20 anos", Vobis, Marca Confiança).</li>
                         <li>Projeto de animação "Os Espadinhas" (Canal 1).</li>
                     </ul>
                 </div>
@@ -223,13 +225,51 @@
                     <ul class="cv-details">
                         <li>Direção Criativa da série "TaninoWar" (Storyboard e Personagens).</li>
                         <li>Supervisão de equipa na curta "A Guerra do Tanino".</li>
+                        <li>Realização e pós-produção de filmes publicitários (Porto 2001, Porto Editora, Câmaras Municipais).</li>
+                        <li>Filmes Institucionais: Cabelte, Lankhorst (Holanda), Grupo Quintas.</li>
                         <li>Animação 3D para assinatura publicitária da CIN.</li>
+                        <li>Supervisão de Web-Design (6 sites finalizados).</li>
+                        <li>Criação do novo manual de identidade da Cinerama.</li>
                     </ul>
+                </div>
+
+                <h2 class="section-header">Educação</h2>
+                
+                <div class="cv-section">
+                    <div class="cv-role">Curso de Formação Pedagógica Inicial de Formadores</div>
+                    <div class="cv-meta">IPFEL | 2004</div>
+                    <ul class="cv-details"><li>Classificação Final: MUITO BOM (105 horas).</li></ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Faculdade de Belas Artes</div>
+                    <div class="cv-meta">Universidade do Porto | 1995 - 2003</div>
+                    <ul class="cv-details">
+                        <li>Design de Comunicação (Artes-Gráficas).</li>
+                        <li>Entrada com média de 86%. 5º ano com média final de 14 valores.</li>
+                    </ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Curso Profissional de Animação 3D</div>
+                    <div class="cv-meta">Cinerama / ICAM | 2000 - 2001</div>
+                    <ul class="cv-details">
+                        <li>Duração de 1760h (aprox. 1 ano).</li>
+                        <li>Média final de 18,4 valores.</li>
+                    </ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Ensino Secundário (Artes Visuais)</div>
+                    <div class="cv-meta">Escola Soares dos Reis | Porto | 1991 - 1994</div>
+                    <ul class="cv-details"><li>Média final de 17,2 valores (Matemática, Física, Geometria, Desenho).</li></ul>
                 </div>
             </div>
 
             <!-- ENGLISH CONTENT -->
             <div class="lang-en">
+                <h2 class="section-header">Experience</h2>
+
                 <div class="cv-section">
                     <div class="cv-role">Supervisor of Graphics & Multimedia Dept.</div>
                     <div class="cv-meta">Lightbox | Porto | 2007 - Present</div>
@@ -239,7 +279,7 @@
                         <li>Brands: Continente, Serralves, Carglass, Optimus, Hyundai, Zippy, Sotinco, Real Companhia Velha, Modalfa, FC Porto, Kasa, Rádio Popular, Note!</li>
                     </ul>
                     <div class="cv-project-list">
-                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" & "2000 EJC" (Dec '24 - May '25)</p>
+                        <p><span class="highlight-year">2025</span> • VFX "Balas & Bolinhos 4" & "2000 EJC"</p>
                         <p><span class="highlight-year">2023</span> • VFX "1506 The Lisbon Genocide"</p>
                         <p><span class="highlight-year">2021</span> • VFX Supervisor TV Pilot "Uma coisa leva a Outra"</p>
                         <p><span class="highlight-year">2019</span> • VFX Supervisor Feature "1618"</p>
@@ -266,6 +306,7 @@
                     <div class="cv-role">Web Designer & Motion Graphics</div>
                     <div class="cv-meta">Play Audiovisuais | V. Nova de Gaia | 2004 - 2005</div>
                     <ul class="cv-details">
+                        <li>Managed Web Design department (3 websites delivered).</li>
                         <li>Graphics for films and brand signatures (Worten, Continente "20 years", Vobis).</li>
                         <li>Animation project "Os Espadinhas" (Canal 1).</li>
                     </ul>
@@ -277,8 +318,44 @@
                     <ul class="cv-details">
                         <li>Creative Direction for "TaninoWar" series (Storyboard & Character Design).</li>
                         <li>Team supervision for short film "A Guerra do Tanino".</li>
+                        <li>Direction and post-production for ad films (Porto 2001, Porto Editora, City Councils).</li>
+                        <li>Institutional films: Cabelte, Lankhorst (Holland), Quintas Group.</li>
                         <li>3D Animation for CIN brand signature.</li>
+                        <li>Web Design supervision (6 sites completed).</li>
+                        <li>Creation of Cinerama's new identity manual.</li>
                     </ul>
+                </div>
+
+                <h2 class="section-header">Education</h2>
+
+                <div class="cv-section">
+                    <div class="cv-role">Pedagogical Training for Trainers</div>
+                    <div class="cv-meta">IPFEL | 2004</div>
+                    <ul class="cv-details"><li>Final Classification: VERY GOOD (105 hours).</li></ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Faculty of Fine Arts</div>
+                    <div class="cv-meta">University of Porto | 1995 - 2003</div>
+                    <ul class="cv-details">
+                        <li>Communication Design (Graphic Arts).</li>
+                        <li>5th year final grade: 14/20.</li>
+                    </ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Professional 3D Animation Course</div>
+                    <div class="cv-meta">Cinerama / ICAM | 2000 - 2001</div>
+                    <ul class="cv-details">
+                        <li>Duration: 1760h (approx. 1 year).</li>
+                        <li>Final grade: 18.4/20.</li>
+                    </ul>
+                </div>
+
+                <div class="cv-section">
+                    <div class="cv-role">Secondary Education (Visual Arts)</div>
+                    <div class="cv-meta">Escola Soares dos Reis | Porto | 1991 - 1994</div>
+                    <ul class="cv-details"><li>Final grade: 17.2/20 (Math, Physics, Geometry, Drawing).</li></ul>
                 </div>
             </div>
 
@@ -384,12 +461,12 @@
 
         function openCV() {
             document.getElementById('cvModal').style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Stop background scroll
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeCV() {
             document.getElementById('cvModal').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scroll
+            document.body.style.overflow = 'auto'; 
         }
     </script>
 
